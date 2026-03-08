@@ -344,7 +344,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <div id="wipe"></div>
 <div id="app">
   <div id="ticker-top">
-    <span class="ticker-inner">✦ <span id="tc1">1,247</span> PROBLEMS MADE NOT OUR PROBLEM &nbsp;&nbsp; ✦ A PUBLIC SERVICE FOR THE UNBOTHERED &nbsp;&nbsp; ✦ NOT YOUR CIRCUS &nbsp;&nbsp; ✦ FILED: NOT MY DEPARTMENT &nbsp;&nbsp; ✦ RETURN TO SENDER &nbsp;&nbsp;</span>
+    <span class="ticker-inner">✦ <span id="tc1">0</span> PROBLEMS MADE NOT OUR PROBLEM &nbsp;&nbsp; ✦ A PUBLIC SERVICE FOR THE UNBOTHERED &nbsp;&nbsp; ✦ NOT YOUR CIRCUS &nbsp;&nbsp; ✦ FILED: NOT MY DEPARTMENT &nbsp;&nbsp; ✦ RETURN TO SENDER &nbsp;&nbsp;</span>
   </div>
   <div id="screen-write" class="screen active">
     <span class="hero-eyebrow">it's not my</span>
@@ -421,23 +421,23 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     <div class="screen-heading">pin it.</div>
     <div class="screen-sub" style="margin-bottom:48px;">make it permanent.</div>
     <div class="tacks-row">
-      <div class="tack-opt" onclick="chooseTack('#D01A00','red')">
+      <div class="tack-opt" onclick="chooseTack('#D01A00')">
         <div class="tack-head" style="background:radial-gradient(circle at 35% 32%,#E84030,#D01A00);box-shadow:0 3px 12px rgba(208,26,0,.65);"></div>
         <div class="tack-lbl">red</div>
       </div>
-      <div class="tack-opt" onclick="chooseTack('#3878D8','blue')">
+      <div class="tack-opt" onclick="chooseTack('#3878D8')">
         <div class="tack-head" style="background:radial-gradient(circle at 35% 32%,#6090E8,#3878D8);box-shadow:0 3px 12px rgba(56,120,216,.6);"></div>
         <div class="tack-lbl">blue</div>
       </div>
-      <div class="tack-opt" onclick="chooseTack('#A0C4E0','baby')">
+      <div class="tack-opt" onclick="chooseTack('#A0C4E0')">
         <div class="tack-head" style="background:radial-gradient(circle at 35% 32%,#C0D8F0,#A0C4E0);box-shadow:0 3px 12px rgba(160,196,224,.5);"></div>
         <div class="tack-lbl">baby</div>
       </div>
-      <div class="tack-opt" onclick="chooseTack('#E8A8A0','pink')">
+      <div class="tack-opt" onclick="chooseTack('#E8A8A0')">
         <div class="tack-head" style="background:radial-gradient(circle at 35% 32%,#F0C0B8,#E8A8A0);box-shadow:0 3px 12px rgba(232,168,160,.45);"></div>
         <div class="tack-lbl">pink</div>
       </div>
-      <div class="tack-opt" onclick="chooseTack('#EDE9E2','white')">
+      <div class="tack-opt" onclick="chooseTack('#EDE9E2')">
         <div class="tack-head" style="background:radial-gradient(circle at 35% 32%,#fff,#EDE9E2);box-shadow:0 3px 8px rgba(237,233,226,.25);border:1px solid rgba(237,233,226,.3);"></div>
         <div class="tack-lbl">white</div>
       </div>
@@ -490,7 +490,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     </div>
   </div>
   <div id="ticker-bot">
-    <span class="ticker-inner">✦ <span id="tc2">1,247</span> PROBLEMS PROCESSED &nbsp;&nbsp; ✦ RETURN TO SENDER &nbsp;&nbsp; ✦ ABOVE MY PAY GRADE &nbsp;&nbsp; ✦ CASE CLOSED &nbsp;&nbsp; ✦ UNBOTHERED. MOISTURIZED. AT PEACE. &nbsp;&nbsp;</span>
+    <span class="ticker-inner">✦ <span id="tc2">0</span> PROBLEMS PROCESSED &nbsp;&nbsp; ✦ RETURN TO SENDER &nbsp;&nbsp; ✦ ABOVE MY PAY GRADE &nbsp;&nbsp; ✦ CASE CLOSED &nbsp;&nbsp; ✦ UNBOTHERED. MOISTURIZED. AT PEACE. &nbsp;&nbsp;</span>
   </div>
 </div>
 <div id="modal" onclick="closeModal(event)">
@@ -525,12 +525,12 @@ function sbFetch(path, opts) {
     }
   }, opts || {}));
 }
-var pCount = 1247, userNum = null, curProblem = '', curEnv = 'classic';
+var pCount = 0, userNum = null, curProblem = '', curEnv = 'classic';
 var curTack = '#D01A00', curAuthor = '', boardData = [];
 var bx = 0, by = 0, dragging = false, driftRAF = null;
 sbFetch('submissions?select=id&order=id.desc&limit=1')
   .then(function(r){ return r.json(); })
-  .then(function(rows){ if (rows && rows.length) { pCount = 1247 + rows[0].id; updateTickers(); } })
+  .then(function(rows){ if (rows && rows.length) { pCount = rows[0].id; updateTickers(); } })
   .catch(function(){});
 var msgs = [
   '> initializing not-my-problem.os',
@@ -675,7 +675,7 @@ function goToBoard() {
   })
   .then(function(r){ return r.json(); })
   .then(function(rows){
-    if (rows && rows[0] && rows[0].id) { userNum = 1247 + rows[0].id; pCount = userNum; updateTickers(); }
+    if (rows && rows[0] && rows[0].id) { userNum = rows[0].id; pCount = userNum; updateTickers(); }
   }).catch(function(){});
   pCount++; updateTickers();
   wipe(function(){
@@ -683,41 +683,20 @@ function goToBoard() {
     buildBoard(); buildRipTabs(); startDrift();
   });
 }
-var seeds = [
-  {num:1201,author:'margaret',text:"My coworker microwaves fish every single Friday. I have said nothing for two years.",env:'classic',tack:'#D01A00',rot:-3,pink:false},
-  {num:1089,author:'anonymous',text:"My landlord fixed the heater with duct tape. It is January and I am cold.",env:'official',tack:'#A0C4E0',rot:2,pink:true},
-  {num:987,author:'carol',text:"My mom keeps telling people I work in computers. I am a marine biologist.",env:'classic',tack:'#3878D8',rot:-1,pink:false},
-  {num:1134,author:'anonymous',text:"Someone on my street has been playing the same four chords on guitar for six months.",env:'torn',tack:'#EDE9E2',rot:4,pink:true},
-  {num:756,author:'derek',text:"My partner finishes every sentence with you know what I mean and I never know.",env:'classic',tack:'#D01A00',rot:-2,pink:false},
-  {num:1198,author:'anonymous',text:"The government keeps sending mail for Gerald who has not lived here since 2011.",env:'official',tack:'#A0C4E0',rot:3,pink:true},
-  {num:832,author:'priya',text:"I have 47 unread texts from my group chat. The topic is still the same thing from March.",env:'torn',tack:'#3878D8',rot:-4,pink:false},
-  {num:1047,author:'anonymous',text:"My boss schedules 4pm Friday meetings and says this could have been an email.",env:'classic',tack:'#E8A8A0',rot:1,pink:true},
-  {num:623,author:'anonymous',text:"There is a pigeon on my AC unit. We have reached a detente.",env:'torn',tack:'#D01A00',rot:-5,pink:false},
-  {num:1180,author:'tom',text:"My WiFi is named Pretty Fly for a WiFi and I cannot figure out how to change it.",env:'classic',tack:'#A0C4E0',rot:2,pink:true},
-  {num:901,author:'anonymous',text:"I told my dentist I floss daily. This is the eighth year I have told him this.",env:'official',tack:'#EDE9E2',rot:-1,pink:false},
-  {num:1211,author:'beth',text:"I wrote my problem on this website at 2am. It made me feel better. That is the problem.",env:'classic',tack:'#3878D8',rot:3,pink:true}
-];
-var positions = [
-  [80,60],[340,44],[610,85],[900,50],[1160,78],[1440,42],[1700,68],[1960,52],[2230,75],[2490,46],[2760,72],[3020,50],
-  [150,290],[430,268],[710,302],[990,256],[1260,278],[1540,254],[1810,290],[2080,268],[2350,285],[2620,258],[2890,295],
-  [60,510],[340,490],[620,524],[900,496],[1180,514],[1460,488],[1740,508],[2020,490],[2300,518],[2580,500],[2860,512],
-  [110,730],[400,714],[680,738],[960,718],[1240,732],[1530,716],[1820,728],[2110,712]
-];
-function lighten(h){ return({'#D01A00':'#E84030','#3878D8':'#6090E8','#A0C4E0':'#C0D8F0','#E8A8A0':'#F0C0B8','#EDE9E2':'#fff','#121010':'#444'}[h]||h); }
 function buildBoard() {
   sbFetch('submissions?select=*&order=id.desc&limit=80')
     .then(function(r){ return r.json(); })
     .then(function(rows){
       var dbPins = (rows||[]).map(function(r){
-        return { num:1247+r.id, author:r.name||'anonymous', text:r.problem, env:r.envelope||'classic', tack:r.tack||'#D01A00', rot:Math.floor(Math.random()*10)-5, pink:Math.random()>.5 };
+        return { num:r.id, author:r.name||'anonymous', text:r.problem, env:r.envelope||'classic', tack:r.tack||'#D01A00', rot:Math.floor(Math.random()*10)-5, pink:Math.random()>.5 };
       });
       var user = { num:pCount, author:curAuthor, text:curProblem||"the board is full of other people's problems. somehow that helps.", env:curEnv, tack:curTack, rot:Math.floor(Math.random()*10)-5, pink:Math.random()>.5, isNew:true };
-      boardData = (dbPins.length > 1 ? dbPins : seeds).concat([user]);
+      boardData = dbPins.concat([user]);
       renderPins(boardData);
     })
     .catch(function(){
       var user = { num:pCount, author:curAuthor, text:curProblem||"the board is full of other people's problems. somehow that helps.", env:curEnv, tack:curTack, rot:Math.floor(Math.random()*10)-5, pink:Math.random()>.5, isNew:true };
-      boardData = seeds.concat([user]);
+      boardData = [user];
       renderPins(boardData);
     });
 }
@@ -745,6 +724,13 @@ function renderPins(data) {
     cork.appendChild(el);
   });
 }
+var positions = [
+  [80,60],[340,44],[610,85],[900,50],[1160,78],[1440,42],[1700,68],[1960,52],[2230,75],[2490,46],[2760,72],[3020,50],
+  [150,290],[430,268],[710,302],[990,256],[1260,278],[1540,254],[1810,290],[2080,268],[2350,285],[2620,258],[2890,295],
+  [60,510],[340,490],[620,524],[900,496],[1180,514],[1460,488],[1740,508],[2020,490],[2300,518],[2580,500],[2860,512],
+  [110,730],[400,714],[680,738],[960,718],[1240,732],[1530,716],[1820,728],[2110,712]
+];
+function lighten(h){ return({'#D01A00':'#E84030','#3878D8':'#6090E8','#A0C4E0':'#C0D8F0','#E8A8A0':'#F0C0B8','#EDE9E2':'#fff','#121010':'#444'}[h]||h); }
 function doSearch() {
   var q = document.getElementById('board-search').value.trim().toLowerCase();
   if (!q) { clearSearch(); return; }
@@ -815,7 +801,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 function buildRipTabs() {
   var row=document.getElementById('rip-tabs'); row.innerHTML='';
-  var shown=(boardData.length>1?boardData.slice(0,6):seeds.slice(0,6)).concat([{num:pCount,text:curProblem||'not my problem.',author:curAuthor}]);
+  var shown=boardData.slice(0,6).concat([{num:pCount,text:curProblem||'not my problem.',author:curAuthor}]);
   shown.forEach(function(p) {
     var el=document.createElement('div'); el.className='rip-tab';
     el.innerHTML='<div class="rip-body"></div><div class="rip-item"><div class="rip-num">#'+p.num+'</div><div class="rip-text">'+p.text+'</div></div>';
