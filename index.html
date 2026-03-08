@@ -687,11 +687,9 @@ function buildBoard() {
   sbFetch('submissions?select=*&order=id.desc&limit=80')
     .then(function(r){ return r.json(); })
     .then(function(rows){
-      var dbPins = (rows||[]).map(function(r){
-        return { num:r.id, author:r.name||'anonymous', text:r.problem, env:r.envelope||'classic', tack:r.tack||'#D01A00', rot:Math.floor(Math.random()*10)-5, pink:Math.random()>.5 };
+      boardData = (rows||[]).map(function(r){
+        return { num:r.id, author:r.name||'anonymous', text:r.problem, env:r.envelope||'classic', tack:r.tack||'#D01A00', rot:Math.floor(Math.random()*10)-5, pink:Math.random()>.5, isNew:(r.id===userNum) };
       });
-      var user = { num:pCount, author:curAuthor, text:curProblem||"the board is full of other people's problems. somehow that helps.", env:curEnv, tack:curTack, rot:Math.floor(Math.random()*10)-5, pink:Math.random()>.5, isNew:true };
-      boardData = dbPins.concat([user]);
       renderPins(boardData);
     })
     .catch(function(){
